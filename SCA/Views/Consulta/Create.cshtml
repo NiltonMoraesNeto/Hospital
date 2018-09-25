@@ -1,0 +1,108 @@
+﻿@model SCA.Model.Consulta
+@{
+    ViewBag.Title = "Criar Nova Consulta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #tableUsuario tr td {
+        padding: 5px 5px 5px 5px;
+    }
+
+    .drop-down {
+        height: 20px;
+    }
+
+    .error {
+        color: #a94442;
+    }
+</style>
+
+
+
+<h2>Criar Nova Consulta</h2>
+<div class="content">
+
+    @using (Html.BeginForm("Create", "Consulta", FormMethod.Post, htmlAttributes: new { @id = "consulta" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <table class="CadPro">
+
+            <tr>
+                <td>Paciente</td>
+                <td>
+                    @Html.DropDownListFor(model => model.Pacientes, ViewBag.Pacientes as SelectList, "Selecione um Paciente", htmlAttributes: new { @class = "select-pdr drop-down", @style = "width:240px" })
+                    @Html.ValidationMessageFor(model => model.Pacientes.IdPaciente, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>Médico(a)</td>
+                <td>
+                    @Html.DropDownListFor(model => model.Usuarios, ViewBag.Usuarios as SelectList, "Selecione um Médico(a)", htmlAttributes: new { @class = "select-pdr drop-down", @style = "width:240px" })
+                    @Html.ValidationMessageFor(model => model.Usuarios.IdUsuario, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>Título</td>
+                <td>
+                    @Html.EditorFor(model => model.Titulo, new { htmlAttributes = new { @class = "input-pdr", @style = "width:240px" } })
+                    @Html.ValidationMessageFor(model => model.Titulo, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+
+        </table>
+
+        <br /><br />
+        <table class="CadPro">
+
+            <tr>
+                <td>Sintoma</td>
+                <td>
+                    <textarea id="Sintoma" maxlength="500" name="Sintoma" class="pdr" style="height: 206px; min-height: 206px; max-height: 206px; width: 658px; min-width: 658px; max-width: 658px;"></textarea>
+                    @Html.ValidationMessageFor(model => model.Sintoma, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+        </table>
+
+        <table class="CadPro">
+            <tr>
+                <td>Data da Consulta</td>
+                <td>
+                    <input name="DataConsulta" id="datetimepicker1" type="text" class="input-pdr" style="width: 240px" required />
+                </td>
+            </tr>
+            <tr>
+                <td>Consulta Finalizada?</td>
+                <td>
+                    @Html.EditorFor(model => model.Finalizar)
+                    @Html.ValidationMessageFor(model => model.Finalizar, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+        </table>
+
+            <table>
+
+                <tr>
+                    <td colspan="4">
+                        <input type="submit" value="Salvar" class="btn btnGreen" style="width: 85px; height: 34px; margin-left: 160px" />
+                        <a href='@Url.Action("/", "Consulta")'>
+                            <input type="button" class="btn btnWhite dropdown-toggle" style="width: 85px; height: 34px;" value="Cancelar" />
+                        </a>
+                    </td>
+                </tr>
+            </table>
+
+
+            }
+
+    </div>
+<script>
+    $(function () {
+        $("#datetimepicker1").datetimepicker({
+            locale: moment.locale('pt-BR'),
+            format: 'DD/MM/YYYY'
+        });
+    });
+</script>

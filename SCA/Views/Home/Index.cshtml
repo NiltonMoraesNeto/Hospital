@@ -1,0 +1,104 @@
+﻿@using SCA.Model
+@model SCA.Model.Usuarios
+
+@{
+    ViewBag.Title = "Agenda";
+}
+
+<meta charset="utf-8" />
+
+<style>
+    #calendar {
+        margin-top: 14px;
+        padding: 6px;
+    }
+</style>
+
+<link href="~/Content/fullcalendar.css" rel="stylesheet" />
+<script src="~/Scripts/fullcalendar.min.js"></script>
+<script src="~/Scripts/lang/pt-br.js"></script>
+
+<div id="calendar"></div>
+
+
+
+<script>
+    $(document).ready(function () {
+
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            defaultDate: '@DateTime.Now.ToString("yyyy-MM-dd")',
+            editable: true,
+            eventLimit: true, // allow "more" link when too many events
+            eventRender: function (event, element) {
+                //$(element).tooltip({ title: event.title });
+                $(element).ggtooltip({ textcolor: "#333", backcolor: "#EEE", bordercolor: "#EEE", placement: "top", title: event.title });
+            },
+            events: [
+
+                @{
+                        var obj = "";
+                        List<Consulta> listMes = ViewBag.ListMes;
+                    }
+                @for (int i = 0; i < listMes.Count; i++)
+                {
+                    if (!listMes[i].Finalizar)
+                    {
+                        obj += "{ " +
+                               "title: '" + listMes[i].Titulo + " - " + listMes[i].Pacientes.NomePaciente + "', " +
+                               "start: '" + listMes[i].DataConsulta.Value.ToString("yyyy-MM-dd hh:mm:ss") + "'," +
+                               "url: '" + "/Consulta/Edit/" + listMes[i].IdConsulta + "'" +
+                               "}";
+                    }
+                    else
+                    {
+                        obj += "{ " +
+                             "title: '" + listMes[i].Titulo + " - " + listMes[i].Pacientes.NomePaciente + "', " +
+                             "start: '" + listMes[i].DataConsulta.Value.ToString("yyyy-MM-dd hh:mm:ss") + "'," +
+                             "url: '" + "/Consulta/Edit/" + listMes[i].IdConsulta + "'" +
+                             "}";
+                    }
+                    if (listMes.Count -1 != i)
+                    {
+                        obj += ",";
+                    }
+                }
+                @Html.Raw(obj)
+            ]
+
+        });
+
+    });
+
+
+
+    $(document).ready(function () {
+        $(".fc-corner-right").click(function () {
+
+            var dateMoment = $('#calendar').fullCalendar('getDate');
+            console.log(dateMoment.format());
+            console.log(dateMoment.toString());
+            var yearMoment = dateMoment.format().split('-')[0];
+            var monthMoment = dateMoment.format().split('-')[1];
+
+            refreshCalendar(yearMoment, monthMoment);
+        });
+
+        $(".fc-corner-left").click(function () {
+
+            var dateMoment = $('#calendar').fullCalendar('getDate');
+            console.log(dateMoment.format());
+            console.log(dateMoment.toString());
+            var yearMoment = dateMoment.format().split('-')[0];
+            var monthMoment = dateMoment.format().split('-')[1];
+
+            //refreshCalendar(yearMoment, monthMoment);
+        });
+
+
+    });
+</script>

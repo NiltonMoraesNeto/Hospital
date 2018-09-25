@@ -1,0 +1,68 @@
+﻿@{
+    Layout = "";
+    ViewBag.Title = "Login";
+}
+<link href="~/Content/Login2.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+<script src="~/Scripts/modernizr-2.8.3.js"></script>
+<script src="~/Scripts/jquery-2.1.4.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery.maskedinput.min.js"></script>
+
+
+<div class="container">
+    @{ Html.RenderPartial("_Alerts"); }
+    <div class="row">
+        <div class="col-md-12">
+            <div class="pr-wrap">
+                <form action="@Url.Action("Login", "Usuarios")" id="formLogin" method="POST">
+                <div class="pass-reset">
+                    <label>
+                        Enter the email you signed up with
+                    </label>
+                    <input type="email" placeholder="Email" />
+                    <input type="submit" value="Submit" class="pass-reset-submit btn btn-success btn-sm" />
+                </div>
+                    </form>
+            </div>
+            <div class="wrap">
+                <p class="form-title">
+                    HOSPITAL
+                </p>
+                <form class="login" action="@Url.Action("Login", "Usuarios")" id="formLogin" method="POST">
+                    @*<input type="text" class="login cpf" placeholder="CPF" name="cpf" required />*@
+                    <input type="text" class="login" placeholder="Login" name="Login" required/>
+                    <input type="password" placeholder="SENHA" name="password" required/>
+                    <input type="submit" value="Entrar" class="btn btn-success btn-sm" />
+                    <div class="remember-forgot">
+                        <div class="row">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(".cpf").mask("999.999.999-99");
+
+
+    $(".btn").click(function () {
+        $("#formLogin").submit();
+    });
+
+</script>
+<script>
+    $(document).ready(function () {
+        $('.forgot-pass').click(function (event) {
+            $(".pr-wrap").toggleClass("show-pass-reset");
+        });
+
+        $('.pass-reset-submit').click(function (event) {
+            $(".pr-wrap").removeClass("show-pass-reset");
+        });
+    });
+</script>

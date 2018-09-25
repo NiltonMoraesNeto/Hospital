@@ -1,0 +1,86 @@
+﻿@model List<SCA.Model.Modelo>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Modelo Index";
+}
+<style>
+    .table tr td, th {
+        font-size: 11px;
+    }
+
+    .datetimepicker {
+        z-index: 100000;
+    }
+
+    .espacamentoTd {
+        padding: 3px;
+    }
+
+    .dropdown-new {
+        font-size: 11px;
+        max-height: 28px;
+    }
+
+    .bs-example {
+        margin: 20px;
+    }
+
+    .icon-input-btn {
+        display: inline-block;
+        position: relative;
+    }
+
+        .icon-input-btn input[type="submit"] {
+            padding-left: 2em;
+        }
+
+        .icon-input-btn .glyphicon {
+            display: inline-block;
+            position: absolute;
+            left: 0.65em;
+            top: 30%;
+        }
+</style>
+
+
+<h2>Modelo</h2>
+
+
+
+
+<div class="content" style="padding: 10px; width: 1120px">
+    <input type="button" name="button" class="btn btnGreen" value="Adicionar Novo Modelo" onclick='javascript: location.href = "@Url.Action("Create", "Modelo")"' />
+    <br /><br />
+    <table class="table table-striped">
+        <tr>
+            <th style="text-align:center">
+                Descrição
+            </th>
+            <th style="text-align:center">
+                Licença
+            </th>
+            <th style="text-align:center">Ações</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="text-align:center">
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td style="text-align:center">
+                    @Html.DisplayFor(modelItem => item.Licencas.Descricao)
+                </td>
+                <td style="text-align:center">
+                    <a href="@Url.Action("Edit", "Modelo", new { id = item.IdModelo })" class="btn btn-xs btn-pen tooltipicon" data-title="Editar"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a href="@Url.Action("Delete", "Modelo", new { id = item.IdModelo })" class="btn btn-xs btnLixo tooltipicon" data-title="Excluir"><span class="glyphicon glyphicon-trash"></span></a>
+            </tr>
+        }
+    </table>
+
+</div>
+
+<script>
+    $(".tooltipicon").ggtooltip({ textcolor: "#FFF", backcolor: "#3C3C3C", bordercolor: "#3C3C3C", placement: "top" });
+</script>

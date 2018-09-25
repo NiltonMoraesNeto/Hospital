@@ -1,0 +1,40 @@
+﻿@{
+    Layout = "";
+    ViewBag.Title = "Login";
+}
+@*<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">*@
+<link href="~/Content/Login2.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+@*<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/login.css" rel="stylesheet" />*@
+
+
+<script src="~/Scripts/modernizr-2.8.3.js"></script>
+<script src="~/Scripts/jquery-2.1.4.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery.maskedinput.min.js"></script>
+<div class="main">
+
+    @{ Html.RenderPartial("_Alerts"); }
+    <div class="login">
+        <h1>Login</h1>
+        <form action="@Url.Action("Login", "Usuarios")" id="formLogin" method="POST">
+            <input type="text" class="cpf" placeholder="CPF" name="cpf" required>
+            <input type="password" placeholder="SENHA" name="password" required>
+            <button type="submit" class="btn btn-primary btn-block btn-large">ENTRAR</button>
+        </form>
+        <br>
+    </div>
+</div>
+
+
+<script>
+
+    $(".cpf").mask("999.999.999-99");
+
+
+    $(".btn").click(function () {
+        $("#formLogin").submit();
+    });
+
+</script>

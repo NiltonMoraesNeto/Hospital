@@ -1,0 +1,61 @@
+﻿@model SCA.Model.PlanoSaude
+@{
+    ViewBag.Title = "Criar Novo Plano de Saúde";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #tableUsuario tr td {
+        padding: 5px 5px 5px 5px;
+    }
+
+    .drop-down {
+        height: 20px;
+    }
+
+    .error {
+        color: #a94442;
+    }
+</style>
+
+
+
+<h2>Criar Novo Plano de Saúde</h2>
+<div class="content">
+
+    @using (Html.BeginForm("Create", "PlanoSaude", FormMethod.Post, htmlAttributes: new { @id = "planoSaude" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <table class="CadPro">
+            <tr>
+                <td>Descrição</td>
+                <td>
+                    @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "input-pdr", @style = "width:240px" } })
+                    @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
+                </td>
+                </tr>
+
+            <tr>
+                <td>Licença</td>
+                <td>
+                    @Html.DropDownListFor(model => model.Licencas, ViewBag.Licencas as SelectList, "Selecione uma Licença", htmlAttributes: new { @class = "select-pdr drop-down", @style = "width:240px" })
+                    @Html.ValidationMessageFor(model => model.Licencas.IdLicenca, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+
+                <tr>
+                    <td colspan="4">
+                        <input type="submit" value="Salvar" class="btn btnGreen" style="width: 85px; height: 34px; margin-left: 160px" />
+                        <a href='@Url.Action("/", "PlanoSaude")'>
+                            <input type="button" class="btn btnWhite dropdown-toggle" style="width: 85px; height: 34px;" value="Cancelar" />
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        
+       
+    }
+
+</div>

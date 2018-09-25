@@ -1,0 +1,238 @@
+﻿@model SCA.Model.Usuarios
+@{
+    ViewBag.Title = "Editar Usuários";
+}
+<style>
+    #tableUsuario tr td {
+        padding: 5px 5px 5px 5px;
+    }
+
+    .error {
+        color: #a94442;
+    }
+
+    .tablespc tr td {
+        padding-right: 10px;
+        padding-bottom: 5px;
+        padding-top: 5px;
+    }
+
+    span.font {
+        font-size: 24px;
+        font-weight: 300;
+        color: #333;
+    }
+</style>
+
+
+<h2>Editar Usuário</h2>
+
+<div class="content">
+
+    @using (Html.BeginForm("Edit", "Usuarios", FormMethod.Post, htmlAttributes: new { @id = "usuarios" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IdUsuario)
+        @Html.HiddenFor(model => model.IdUsuarioLicenca)
+        @Html.HiddenFor(model => model.IdUsuarioLicenca.IdUsuarioLicenca)
+        @Html.HiddenFor(model => model.Perfil.IdPerfil)
+        @Html.HiddenFor(model => model.Persisted)
+
+        <table class="CadPro">
+            <tr>
+                <td>Nome do Usuário</td>
+                <td>
+                    @Html.EditorFor(model => model.NomeUsuario, new { htmlAttributes = new { @class = "input-pdr", @style = "width:240px" } })
+                    @Html.ValidationMessageFor(model => model.NomeUsuario, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>Perfil</td>
+                <td colspan="3">
+                    @Html.DropDownListFor(model => model.Perfil, ViewBag.Perfis as SelectList, "Selecione um perfil", htmlAttributes: new { @class = "select-pdr drop-down", @style = "width:240px" })
+                    @Html.ValidationMessageFor(model => model.Perfil.IdPerfil, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>CRM</td>
+                <td>
+                    @Html.EditorFor(model => model.Crm, new { htmlAttributes = new { @class = "input-pdr", @style = "width:240px" } })
+                    @Html.ValidationMessageFor(model => model.Crm, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>Licença</td>
+                <td>
+                    @Html.DropDownListFor(model => model.Licencas, ViewBag.Licencas as SelectList, "Selecione uma Licença", htmlAttributes: new { @class = "select-pdr drop-down", @style = "width:240px" })
+                    @Html.ValidationMessageFor(model => model.Licencas.IdLicenca, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>E-mail</td>
+                <td>
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "input-pdr", @style = "width:240px" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </td>
+                <td width="92px">Data de Nascimento</td>
+                <td>
+                    <input name="DataNascimento" id="datetimepicker1" type="text" class="input-pdr" style="width: 170px" required value="@Model.DataNascimento" />
+                </td>
+            </tr>
+            <tr>
+                <td>Login</td>
+                <td>
+                    @Html.EditorFor(model => model.Login, new { htmlAttributes = new { @class = "input-pdr", @style = "width:240px" } })
+                    @Html.ValidationMessageFor(model => model.Login, "", new { @class = "text-danger" })
+                </td>
+                <td width="92px">Senha</td>
+                <td style="position: relative">
+                    <input name="Senha" id="Senha" type="password" class="input-pdr" style="width: 170px" value="@Model.Senha" />
+                </td>
+            </tr>
+            <tr>
+                <td>CPF</td>
+                <td>
+                    @Html.EditorFor(model => model.CPF, new { htmlAttributes = new { @class = "input-pdr cpf", @style = "width:240px" } })
+                    @Html.ValidationMessageFor(model => model.CPF, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>RG</td>
+                <td>
+                    @Html.EditorFor(model => model.Rg, new { htmlAttributes = new { @class = "input-pdr", @style = "width:240px" } })
+                    @Html.ValidationMessageFor(model => model.Rg, "", new { @class = "text-danger" })
+                </td>
+                <td width="92px">Local de Emissão</td>
+                <td>
+                    @Html.EditorFor(model => model.LocalEmissao, new { htmlAttributes = new { @class = "input-pdr", @style = "width:240px" } })
+                    @Html.ValidationMessageFor(model => model.LocalEmissao, "", new { @class = "text-danger" })
+
+                </td>
+            </tr>
+            <tr>
+                <td>Telefone 1</td>
+                <td>
+                    @Html.EditorFor(model => model.Telefone1, new { htmlAttributes = new { @class = "input-pdr telefone", @style = "width:240px" } })
+                    @Html.ValidationMessageFor(model => model.Telefone1, "", new { @class = "text-danger" })
+                </td>
+                <td width="92px">Telefone 2</td>
+                <td>
+                    @Html.EditorFor(model => model.Telefone2, new { htmlAttributes = new { @class = "input-pdr telefone", @style = "width:240px" } })
+                    @Html.ValidationMessageFor(model => model.Telefone2, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>CEP</td>
+                <td>
+                    @Html.EditorFor(model => model.Cep, new { htmlAttributes = new { @class = "input-pdr", @style = "width:240px", @maxlength = "9" } })
+                    @Html.ValidationMessageFor(model => model.Cep, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>Rua</td>
+                <td>
+                    @Html.EditorFor(model => model.Rua, new { htmlAttributes = new { @class = "input-pdr", @style = "width:240px" } })
+                    @Html.ValidationMessageFor(model => model.Rua, "", new { @class = "text-danger" })
+                </td>
+                <td width="92px">Número</td>
+                <td>
+                    @Html.EditorFor(model => model.Numero, new { htmlAttributes = new { @class = "input-pdr", @style = "width:240px" } })
+                    @Html.ValidationMessageFor(model => model.Numero, "", new { @class = "text-danger" })
+
+                </td>
+            </tr>
+            <tr>
+                <td>Bairro</td>
+                <td>
+                    @Html.EditorFor(model => model.Bairro, new { htmlAttributes = new { @class = "input-pdr", @style = "width:240px" } })
+                    @Html.ValidationMessageFor(model => model.Bairro, "", new { @class = "text-danger" })
+                </td>
+                <td width="92px">Cidade</td>
+                <td>
+                    @Html.EditorFor(model => model.Cidade, new { htmlAttributes = new { @class = "input-pdr", @style = "width:240px" } })
+                    @Html.ValidationMessageFor(model => model.Cidade, "", new { @class = "text-danger" })
+
+                </td>
+            </tr>
+            <tr>
+                <td>Estado</td>
+                <td>
+                    @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "input-pdr", @style = "width:240px" } })
+                    @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
+                </td>
+                <td width="92px">Complemento</td>
+                <td>
+                    @Html.EditorFor(model => model.Complemento, new { htmlAttributes = new { @class = "input-pdr", @style = "width:240px" } })
+                    @Html.ValidationMessageFor(model => model.Complemento, "", new { @class = "text-danger" })
+
+                </td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td colspan="3">
+                    @Html.EnumDropDownListFor(model => model.Status, "Selecione um status", htmlAttributes: new { @class = "select-pdr drop-down", @style = "width:240px" })
+                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>Excluir</td>
+                <td>
+                    @Html.EditorFor(model => model.Excluido)
+                    @Html.ValidationMessageFor(model => model.Excluido, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="3">
+                    <input type="submit" value="Salvar" class="btn btnGreen" style="width: 85px; height: 34px; margin-left: 160px" />
+                    <a href='@Url.Action("/", "Usuarios")'>
+                        <input type="button" class="btn btnWhite dropdown-toggle" style="width: 85px; height: 34px;" value="Cancelar" />
+                    </a>
+                </td>
+
+            </tr>
+        </table>
+    }
+
+
+</div>
+
+<script>
+
+    @if (@Model.Perfil != null)
+    {
+        <text>
+    $("#Perfil").val(@Model.Perfil.IdPerfil);
+    </text>
+    }
+
+</script>
+<script>
+
+    @if (@Model.Licencas != null)
+    {
+        <text>
+    $("#Licencas").val(@Model.Licencas.IdLicenca);
+    </text>
+    }
+
+</script>
+    <script>
+
+    @if (@Model.Senha != null)
+    {
+        <text>
+    $("#Senha").val(@Model.Senha);
+    </text>
+    }
+
+    @if (@Model.DataNascimento != null)
+    {
+        <text>
+    $("#DataNascimento").val(@Model.DataNascimento);
+    </text>
+    }
+
+</script>

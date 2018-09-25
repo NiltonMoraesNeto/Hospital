@@ -1,0 +1,194 @@
+﻿@using SCA.CustomHtmlHelpers
+@using SCA.Models
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - HOSPITAL</title>
+
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/elegant-icons-style.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/style_v1.css" rel="stylesheet" />
+    <link href="~/Content/component.css" rel="stylesheet" />
+    <link href="~/Content/jquery.alerts.css" rel="stylesheet" />
+    <link href="~/Content/ggtooltip.css" rel="stylesheet" />
+
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    
+    <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/moment-with-locales.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.10.4.min.js"></script>
+    <script src="~/Scripts/jquery.moneymask.js"></script>
+    <script src="~/Scripts/jquery.maskedinput.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/jquery.scrollTo.min.js"></script>
+    <script src="~/Scripts/jquery.nicescroll.js"></script>
+    <script src="~/Scripts/jquery.cbpNTAccordion.min.js"></script>
+    <script src="~/Scripts/jquery.alerts.js"></script>
+    <script src="~/Scripts/scripts.js"></script>
+    <script src="~/Scripts/ggtooltip.js"></script>
+
+
+</head>
+<body>
+    <header class="header dark-bg">
+        <div class="toggle-nav">
+            <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"></div>
+        </div>
+        <!--logo start-->
+        <a href="@Url.Action("Index", "Home")" class="logo">HOSPITAL <span class="lite">HOSPITAL</span></a>
+        <!--logo end-->
+        <div class="nav search-row" id="top_menu">
+            @if (SessionContext.UsuarioLogado != null)
+            {
+            }
+            <!-- search form start
+            <!-- search form end -->
+        </div>
+        <div class="top-nav notification-row">
+            <!-- notificatoin dropdown start-->
+            <ul class="nav pull-right top-menu">
+
+
+                <!-- alert notification end-->
+                <!-- user login dropdown start-->
+                <li class="dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="profile-ava">
+                            <!--<img alt="" src="~/img/avatar1_small.jpg">-->
+                        </span>
+                        <span class="username">
+                            @if (SessionContext.UsuarioLogado != null)
+                            {
+                                if (SessionContext.UsuarioLogado.Usuarios != null)
+                                {
+                                    @Html.Raw(SessionContext.UsuarioLogado.Usuarios.NomeUsuario + " - " + SessionContext.UsuarioLogado.Usuarios.Perfil.Nome);
+                                }
+                            }
+                    </span>
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu extended logout">
+                    @*<div class="log-arrow-up"></div>*@
+                    <li class="eborder-top">
+                        <a href="@Url.Action("MyProfile", "Usuarios")"><span class="glyphicon glyphicon-user"></span> Meu Perfil</a>
+                    </li>
+
+                    <li>
+                        <a href="@Url.Action("LogOff","Usuarios")"><span class="glyphicon glyphicon-log-out"></span>  Sair</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- user login dropdown end -->
+        </ul>
+        <!-- notificatoin dropdown end-->
+    </div>
+</header>
+
+    @Html.MenuSistema();
+
+<!--main content start-->
+<section id="main-content">
+    <section class="wrapper">
+        <div class="row" style="margin: 1px 1px 1px 1px !important ">
+            @{ Html.RenderPartial("_Alerts"); }
+            @RenderBody()
+        </div>
+
+    </section>
+</section>
+
+
+
+
+<script>
+
+    jQuery.validator.addMethod("cpf", function (value, element) {
+        value = jQuery.trim(value);
+
+        value = value.replace('.', '');
+        value = value.replace('.', '');
+        cpf = value.replace('-', '');
+        while (cpf.length < 11) cpf = "0" + cpf;
+        var expReg = /^0+$|^1+$|^2+$|^3+$|^4+$|^5+$|^6+$|^7+$|^8+$|^9+$/;
+        var a = [];
+        var b = new Number;
+        var c = 11;
+        for (i = 0; i < 11; i++) {
+            a[i] = cpf.charAt(i);
+            if (i < 9) b += (a[i] * --c);
+        }
+        if ((x = b % 11) < 2) { a[9] = 0 } else { a[9] = 11 - x }
+        b = 0;
+        c = 11;
+        for (y = 0; y < 10; y++) b += (a[y] * c--);
+        if ((x = b % 11) < 2) { a[10] = 0; } else { a[10] = 11 - x; }
+
+        var retorno = true;
+        if ((cpf.charAt(9) != a[9]) || (cpf.charAt(10) != a[10]) || cpf.match(expReg)) retorno = false;
+
+        return this.optional(element) || retorno;
+
+    }, "Informe um CPF válido");
+
+    jQuery(function ($) {
+        $(".date").mask("99/99/9999", { placeholder: "dd/mm/aaaa" });
+        $(".phone").mask("(99) 9999-9999");
+        $(".tin").mask("99-9999999");
+        $(".ssn").mask("999-99-9999");
+        $(".cpf").mask("999.999.999-99");
+        $(".cnpj").mask("99.999.999/9999-99");
+    });
+
+    jQuery(".telefone")
+        .mask("(99) 9999-9999?9")
+        .focusout(function (event) {
+            var target, phone, element;
+            target = (event.currentTarget) ? event.currentTarget : event.srcElement;
+            phone = target.value.replace(/\D/g, '');
+            element = $(target);
+            element.unmask();
+            if (phone.length > 10) {
+                element.mask("(99) 99999-999?9");
+            } else {
+                element.mask("(99) 9999-9999?9");
+            }
+        });
+
+$(function () {
+    $(".datetimepicker").datetimepicker({
+        locale: moment.locale('pt-BR'),
+        format: 'DD/MM/YYYY'
+    });
+});
+    $(function () {
+        $(".datetimepicker-right").datetimepicker({
+            locale: moment.locale('pt-BR'),
+            format: 'DD/MM/YYYY',
+            widgetPositioning: {
+                horizontal: 'right'
+            }
+        });
+    });
+    $('.timepicker').datetimepicker({
+        locale: moment.locale('pt-BR'),
+        format: 'HH:mm'
+    });
+
+
+    $(".moeda").maskMoney({ symbol: 'R$ ', showSymbol: true, thousands: '.', decimal: ',', symbolStay: true });
+
+
+</script>
+</body>
+</html>

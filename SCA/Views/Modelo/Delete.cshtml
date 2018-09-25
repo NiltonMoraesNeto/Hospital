@@ -1,0 +1,43 @@
+﻿@model SCA.Model.Modelo
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Deletar Modelo</h2>
+
+<div class="content">
+
+    <h3>Tem certeza que deseja excluir?</h3>
+    <hr />
+
+    <table class="CadPro">
+        <tr>
+            <td class="negrito">ID Modelo</td>
+            <td>@Html.DisplayFor(model => model.IdModelo)</td>
+        </tr>
+        <tr>
+            <td class="negrito">Descrição</td>
+            <td>@Html.DisplayFor(model => model.Descricao)</td>
+        </tr>
+        <tr>
+            <td class="negrito">Licença</td>
+            <td>@Html.DisplayFor(model => model.Licencas.Descricao)</td>
+        </tr>
+    </table>
+    <hr />
+    <table class="CadPro">
+        <tr>
+            <td>
+                @using (Html.BeginForm())
+            {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Excluir" class="btn btnRed" style="width:85px;height:34px" />
+                    <a href='@Url.Action("/", "Modelo")'>
+                        <input type="button" class="btn btnWhite dropdown-toggle" value="Cancelar" />
+                    </a>
+                }
+            </td>
+        </tr>
+    </table>
+</div>
